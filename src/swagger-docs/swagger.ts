@@ -39,6 +39,38 @@
  *           type: string
  *           example: alice@example.com
  *           description: User's email address
+ *     UserRegistrationInput:
+ *       type: object
+ *       required:
+ *         - name
+ *         - email
+ *         - password
+ *       properties:
+ *         name:
+ *           type: string
+ *           example: Alice
+ *         email:
+ *           type: string
+ *           format: email
+ *           example: alice@example.com
+ *         password:
+ *           type: string
+ *           format: password
+ *           example: strongPassword123
+ *     UserLoginInput:
+ *       type: object
+ *       required:
+ *         - email
+ *         - password
+ *       properties:
+ *         email:
+ *           type: string
+ *           format: email
+ *           example: alice@example.com
+ *         password:
+ *           type: string
+ *           format: password
+ *           example: strongPassword123
  */
 
 /**

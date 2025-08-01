@@ -5,3 +5,7 @@ export const userRegistrationSchema = z.object({
   email: z.email(),
   password: z.string().min(8),
 });
+export const userLoginSchema = z.object({
+  email: z.email(),
+  password: z.string(),
+});

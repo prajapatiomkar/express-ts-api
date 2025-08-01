@@ -22,12 +22,6 @@ const router = Router();
  *                 $ref: '#/components/schemas/User'
  *       500:
  *         description: Internal server error
- */
-router.get("/", getUsers);
-
-/**
- * @openapi
- * /api/v1/users:
  *   post:
  *     summary: Create a new user
  *     tags:
@@ -51,6 +45,6 @@ router.get("/", getUsers);
  *       500:
  *         description: Internal server error
  */
-router.post("/", validate(userRegistrationSchema), createUser);
+router.get("/", getUsers);
 
 export default router;
