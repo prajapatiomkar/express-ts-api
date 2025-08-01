@@ -2,6 +2,7 @@ import { Router } from "express";
 import { getUsers, createUser } from "../controllers/userController";
 import { validate } from "../middleware/validationMiddleware";
 import { userRegistrationSchema } from "../schemas/userSchemas";
+import { authenticate } from "../middleware/authMiddleware";
 
 const router = Router();
 /**
@@ -46,5 +47,7 @@ const router = Router();
  *         description: Internal server error
  */
 router.get("/", getUsers);
-
+router.get("/protected", authenticate, (req, res) => {
+  res.json({ msg: "You are authenticated!" });
+});
 export default router;
