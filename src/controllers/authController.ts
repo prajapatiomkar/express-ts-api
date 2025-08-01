@@ -8,7 +8,7 @@ dotenv.config();
 export const register = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const { name, email, password } = req.body;
@@ -29,7 +29,7 @@ export const register = async (
 export const login = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const { email, password } = req.body;
@@ -44,7 +44,7 @@ export const login = async (
       process.env.JWT_SECRET as Secret,
       {
         expiresIn: process.env.JWT_EXPIRES_IN,
-      } as SignOptions
+      } as SignOptions,
     );
     res.status(CODE.OK).json({
       token,

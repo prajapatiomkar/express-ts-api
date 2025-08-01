@@ -1,14 +1,14 @@
-import express from "express";
-import helmet from "helmet";
 import cors from "cors";
 import dotenv from "dotenv";
-import userRoutes from "./routes/userRoutes";
-import authRoutes from "./routes/authRoutes";
-import { errorHandler } from "./middleware/errorHandler";
-import { connectDB } from "./config/database";
-import swaggerUi from "swagger-ui-express";
-import swaggerSpec from "./swagger";
+import express from "express";
+import helmet from "helmet";
 import { SwaggerTheme, SwaggerThemeNameEnum } from "swagger-themes";
+import swaggerUi from "swagger-ui-express";
+import { connectDB } from "./config/database";
+import { errorHandler } from "./middleware/errorHandler";
+import authRoutes from "./routes/authRoutes";
+import userRoutes from "./routes/userRoutes";
+import swaggerSpec from "./swagger";
 
 dotenv.config();
 

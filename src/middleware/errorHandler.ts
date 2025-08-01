@@ -4,7 +4,7 @@ export function errorHandler(
   err: any,
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) {
   const status = err.status || err.status || 500;
   res.status(status).json({

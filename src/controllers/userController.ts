@@ -5,7 +5,7 @@ import User from "../models/userModel";
 export const getUsers = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const users = await User.find();
@@ -18,7 +18,7 @@ export const getUsers = async (
 export const createUser = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const user = new User(req.body);
