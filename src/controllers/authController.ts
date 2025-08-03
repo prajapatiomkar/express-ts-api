@@ -1,14 +1,14 @@
-import { Request, Response, NextFunction } from "express";
+import dotenv from "dotenv";
+import { CookieOptions, NextFunction, Request, Response } from "express";
+import jwt, { Secret, SignOptions } from "jsonwebtoken";
 import User from "../models/userModel";
 import CODE from "../utils/statusCodes";
-import jwt, { Secret, SignOptions } from "jsonwebtoken";
-import dotenv from "dotenv";
 dotenv.config();
 
 export const register = async (
   req: Request,
   res: Response,
-  next: NextFunction,
+  next: NextFunction
 ) => {
   try {
     const { name, email, password } = req.body;
@@ -29,7 +29,7 @@ export const register = async (
 export const login = async (
   req: Request,
   res: Response,
-  next: NextFunction,
+  next: NextFunction
 ) => {
   try {
     const { email, password } = req.body;
@@ -44,12 +44,27 @@ export const login = async (
       process.env.JWT_SECRET as Secret,
       {
         expiresIn: process.env.JWT_EXPIRES_IN,
-      } as SignOptions,
+      } as SignOptions
     );
-    res.status(CODE.OK).json({
-      token,
-      user: { id: user._id, name: user.name, email: user.email },
+
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      maxAge: Number(process.env.MAX_AGE),
+      path: "/",
     });
+    res.status(CODE.OK).json({ message: "user login successfully" });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const logout = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
   } catch (error) {
     next(error);
   }

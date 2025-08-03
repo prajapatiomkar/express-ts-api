@@ -1,3 +1,4 @@
+import cookieParser from "cookie-parser";
 import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";
@@ -9,13 +10,13 @@ import { errorHandler } from "./middleware/errorHandler";
 import authRoutes from "./routes/authRoutes";
 import userRoutes from "./routes/userRoutes";
 import swaggerSpec from "./swagger";
-
 dotenv.config();
 
 const app = express();
 const theme = new SwaggerTheme();
+
 const swaggerOptions = theme.getDefaultConfig(
-  process.env.SWAGGER_THEME
+  process.env.SWAGGER_THEME === "true"
     ? SwaggerThemeNameEnum.DARK
     : SwaggerThemeNameEnum.CLASSIC
 );
@@ -28,6 +29,7 @@ app.use(
 );
 app.use(helmet());
 app.use(cors());
+app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/api/v1/users", userRoutes);
