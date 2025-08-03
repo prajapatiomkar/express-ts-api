@@ -1,28 +1,28 @@
-import { Request, Response, NextFunction } from "express";
-import { Secret } from "jsonwebtoken";
-import CODE from "../utils/statusCodes";
-import jwt from "jsonwebtoken";
+import { NextFunction, Request, Response } from "express";
+import jwt, { Secret } from "jsonwebtoken";
 import User from "../models/userModel";
+import CODE from "../utils/statusCodes";
 export interface AuthRequest extends Request {
   user?: any;
 }
-
 const JWT_SECRET = process.env.JWT_SECRET as Secret;
+
 export const authenticate = async (
   req: AuthRequest,
   res: Response,
-  next: NextFunction,
+  next: NextFunction
 ) => {
-  const authHeader = req.headers.authorization;
-  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+  // Read token from cookie
+  const token = req.cookies?.token;
+  if (!token) {
     return res.status(CODE.UNAUTHORIZED).json({ error: "No token provided" });
   }
-  const token = authHeader.split(" ")[1];
   try {
     const decoded: any = jwt.verify(token, JWT_SECRET);
     req.user = await User.findById(decoded.userId).select("-password");
-    if (!req.user)
+    if (!req.user) {
       return res.status(CODE.UNAUTHORIZED).json({ error: "Invalid token" });
+    }
     next();
   } catch {
     res.status(CODE.UNAUTHORIZED).json({ error: "Invalid or expired token" });

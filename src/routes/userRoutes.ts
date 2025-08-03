@@ -1,8 +1,8 @@
 import { Router } from "express";
-import { getUsers, createUser } from "../controllers/userController";
+import { createUser, getUsers } from "../controllers/userController";
+import { authenticate } from "../middleware/authMiddleware";
 import { validate } from "../middleware/validationMiddleware";
 import { userRegistrationSchema } from "../schemas/userSchemas";
-import { authenticate } from "../middleware/authMiddleware";
 
 const router = Router();
 /**
@@ -48,6 +48,6 @@ const router = Router();
  */
 router.get("/", getUsers);
 router.get("/protected", authenticate, (req, res) => {
-  res.json({ msg: "You are authenticated!" });
+  res.json({ message: "shhh... you are in protected route!" });
 });
 export default router;
